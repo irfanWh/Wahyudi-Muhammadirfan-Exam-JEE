@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>Gestion des clients</h2>
+
+  <form (ngSubmit)="saveClient()" class="form">
+    <input type="text" placeholder="Nom" [(ngModel)]="client.nom" name="nom" required>
+    <input type="email" placeholder="Email" [(ngModel)]="client.email" name="email" required>
+
+    <button type="submit">
+      {{ editMode ? 'Modifier' : 'Ajouter' }}
+    </button>
+
+    <button type="button" (click)="resetForm()" *ngIf="editMode">
+      Annuler
+    </button>
+  </form>
+
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let c of clients">
+      <td>{{ c.id }}</td>
+      <td>{{ c.nom }}</td>
+      <td>{{ c.email }}</td>
+      <td>
+        <button (click)="editClient(c)">Modifier</button>
+        <button class="danger" (click)="deleteClient(c.id)">Supprimer</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

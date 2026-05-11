@@ -1,0 +1,160 @@
+<div class="container">
+
+  <h2>Gestion des Contrats</h2>
+
+  <div class="filter">
+
+    <label>Type de contrat:</label>
+
+    <select [(ngModel)]="selectedType"
+            (change)="onTypeChange()"
+            name="type">
+
+      <option value="automobile">Automobile</option>
+      <option value="habitation">Habitation</option>
+      <option value="sante">Santé</option>
+
+    </select>
+  </div>
+
+  <form (ngSubmit)="saveContrat()" class="form">
+
+    <input type="date"
+           [(ngModel)]="contrat.dateSouscription"
+           name="dateSouscription">
+
+    <select [(ngModel)]="contrat.statut"
+            name="statut">
+
+      <option value="EN_COURS">EN_COURS</option>
+      <option value="VALIDE">VALIDE</option>
+      <option value="RESILIE">RESILIE</option>
+
+    </select>
+
+    <input type="number"
+           placeholder="Montant"
+           [(ngModel)]="contrat.montantCotisation"
+           name="montantCotisation">
+
+    <input type="number"
+           placeholder="Durée"
+           [(ngModel)]="contrat.dureeContrat"
+           name="dureeContrat">
+
+    <input type="number"
+           placeholder="Taux"
+           [(ngModel)]="contrat.tauxCouverture"
+           name="tauxCouverture">
+
+    <input type="number"
+           placeholder="Client ID"
+           [(ngModel)]="contrat.clientId"
+           name="clientId">
+
+    <!-- AUTOMOBILE -->
+
+    <div *ngIf="selectedType === 'automobile'">
+
+      <input type="text"
+             placeholder="Immatriculation"
+             [(ngModel)]="contrat.numeroImmatriculation"
+             name="numeroImmatriculation">
+
+      <input type="text"
+             placeholder="Marque"
+             [(ngModel)]="contrat.marqueVehicule"
+             name="marqueVehicule">
+
+      <input type="text"
+             placeholder="Modèle"
+             [(ngModel)]="contrat.modeleVehicule"
+             name="modeleVehicule">
+
+    </div>
+
+    <!-- HABITATION -->
+
+    <div *ngIf="selectedType === 'habitation'">
+
+      <select [(ngModel)]="contrat.typeLogement"
+              name="typeLogement">
+
+        <option value="APPARTEMENT">APPARTEMENT</option>
+        <option value="MAISON">MAISON</option>
+        <option value="LOCAL_COMMERCIAL">LOCAL_COMMERCIAL</option>
+
+      </select>
+
+      <input type="text"
+             placeholder="Adresse"
+             [(ngModel)]="contrat.adresseLogement"
+             name="adresseLogement">
+
+      <input type="number"
+             placeholder="Superficie"
+             [(ngModel)]="contrat.superficie"
+             name="superficie">
+
+    </div>
+
+    <!-- SANTE -->
+
+    <div *ngIf="selectedType === 'sante'">
+
+      <select [(ngModel)]="contrat.niveauCouverture"
+              name="niveauCouverture">
+
+        <option value="BASIQUE">BASIQUE</option>
+        <option value="INTERMEDIAIRE">INTERMEDIAIRE</option>
+        <option value="PREMIUM">PREMIUM</option>
+
+      </select>
+
+      <input type="number"
+             placeholder="Nombre personnes"
+             [(ngModel)]="contrat.nombrePersonnesCouvertes"
+             name="nombrePersonnesCouvertes">
+
+    </div>
+
+    <button type="submit">
+      Ajouter Contrat
+    </button>
+
+  </form>
+
+  <table>
+
+    <thead>
+    <tr>
+
+      <th>ID</th>
+      <th>Statut</th>
+      <th>Montant</th>
+      <th>Actions</th>
+
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr *ngFor="let contrat of contrats">
+
+      <td>{{ contrat.id }}</td>
+      <td>{{ contrat.statut }}</td>
+      <td>{{ contrat.montantCotisation }}</td>
+
+      <td>
+        <button class="danger"
+                (click)="deleteContrat(contrat.id)">
+          Supprimer
+        </button>
+      </td>
+
+    </tr>
+
+    </tbody>
+  </table>
+
+</div>

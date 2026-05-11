@@ -1,0 +1,76 @@
+<div class="container">
+
+  <h2>Gestion des Paiements</h2>
+
+  <form (ngSubmit)="savePaiement()" class="form">
+
+    <input type="date"
+           [(ngModel)]="paiement.datePaiement"
+           name="datePaiement">
+
+    <input type="number"
+           placeholder="Montant"
+           [(ngModel)]="paiement.montant"
+           name="montant">
+
+    <select [(ngModel)]="paiement.typePaiement"
+            name="typePaiement">
+
+      <option value="MENSUALITE">MENSUALITE</option>
+      <option value="PAIEMENT_ANNUEL">PAIEMENT_ANNUEL</option>
+      <option value="PAIEMENT_EXCEPTIONNEL">PAIEMENT_EXCEPTIONNEL</option>
+
+    </select>
+
+    <input type="number"
+           placeholder="Contrat ID"
+           [(ngModel)]="paiement.contratId"
+           name="contratId">
+
+    <button type="submit">
+      Ajouter Paiement
+    </button>
+
+  </form>
+
+  <table>
+
+    <thead>
+
+    <tr>
+
+      <th>ID</th>
+      <th>Date</th>
+      <th>Montant</th>
+      <th>Type</th>
+      <th>Actions</th>
+
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr *ngFor="let paiement of paiements">
+
+      <td>{{ paiement.id }}</td>
+      <td>{{ paiement.datePaiement }}</td>
+      <td>{{ paiement.montant }}</td>
+      <td>{{ paiement.typePaiement }}</td>
+
+      <td>
+
+        <button class="danger"
+                (click)="deletePaiement(paiement.id)">
+          Supprimer
+        </button>
+
+      </td>
+
+    </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
