@@ -1,10 +1,14 @@
 <nav class="navbar">
+
   <h2>Gestion Assurance</h2>
-  <div>
+
+  <div *ngIf="authService.isAuthenticated()">
     <a routerLink="/clients">Clients</a>
     <a routerLink="/contrats">Contrats</a>
     <a routerLink="/paiements">Paiements</a>
+    <button class="logout" (click)="logout()">Logout</button>
   </div>
+
 </nav>
 
 <router-outlet></router-outlet>

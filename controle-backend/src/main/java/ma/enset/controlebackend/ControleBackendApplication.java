@@ -7,8 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootApplication
 public class ControleBackendApplication {
@@ -23,7 +25,12 @@ public class ControleBackendApplication {
             ContratAutomobileRepository contratAutomobileRepository,
             ContratHabitationRepository contratHabitationRepository,
             ContratSanteRepository contratSanteRepository,
-            PaiementRepository paiementRepository
+            PaiementRepository paiementRepository,
+
+            AppUserRepository appUserRepository,
+            AppRoleRepository appRoleRepository,
+
+            PasswordEncoder passwordEncoder
     ) {
         return args -> {
 
@@ -110,6 +117,43 @@ public class ControleBackendApplication {
             paiementRepository.findAll().forEach(p -> {
                 System.out.println(p.getId() + " - " + p.getMontant() + " - " + p.getTypePaiement());
             });
+            AppRole adminRole = AppRole.builder()
+                    .roleName("ROLE_ADMIN")
+                    .build();
+
+            AppRole employeRole = AppRole.builder()
+                    .roleName("ROLE_EMPLOYE")
+                    .build();
+
+            AppRole clientRole = AppRole.builder()
+                    .roleName("ROLE_CLIENT")
+                    .build();
+
+            appRoleRepository.save(adminRole);
+            appRoleRepository.save(employeRole);
+            appRoleRepository.save(clientRole);
+
+            AppUser admin = AppUser.builder()
+                    .username("admin")
+                    .password(passwordEncoder.encode("1234"))
+                    .roles(List.of(adminRole))
+                    .build();
+
+            AppUser employe = AppUser.builder()
+                    .username("employe")
+                    .password(passwordEncoder.encode("1234"))
+                    .roles(List.of(employeRole))
+                    .build();
+
+            AppUser client = AppUser.builder()
+                    .username("client")
+                    .password(passwordEncoder.encode("1234"))
+                    .roles(List.of(clientRole))
+                    .build();
+
+            appUserRepository.save(admin);
+            appUserRepository.save(employe);
+            appUserRepository.save(client);
         };
     }
 }
